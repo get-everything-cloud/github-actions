@@ -6,7 +6,7 @@ Reusable GitHub Actions maintained by get-everything-cloud. Each action lives in
 
 | Action | What it does |
 | --- | --- |
-| [`kvault-fetch-secret`](kvault-fetch-secret/) | Fetches secrets from a [KVault](#kvault) instance using the job's GitHub OIDC token, masks them in the log and exports them as environment variables. No long-lived credentials are stored in GitHub. |
+| [`kvault`](kvault/) | Fetches secrets from a [KVault](#kvault) instance using the job's GitHub OIDC token, masks them in the log and exports them as environment variables. No long-lived credentials are stored in GitHub. |
 
 ## Quick start
 
@@ -15,13 +15,13 @@ Reference an action by its folder and a tag:
 ```yaml
 permissions:
   contents: read
-  id-token: write   # needed by kvault-fetch-secret
+  id-token: write   # needed by kvault
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: get-everything-cloud/github-actions/kvault-fetch-secret@kvault-fetch-secret/v1.0.0
+      - uses: get-everything-cloud/github-actions/kvault@kvault/v1.0.0
         with:
           url: https://vault.example.com
           audience: kvault-example
@@ -37,8 +37,8 @@ Each action's README lists its inputs, requirements and error messages.
 Tags are per action, in the form `<action>/vX.Y.Z`:
 
 ```
-kvault-fetch-secret/v1.0.0
-kvault-fetch-secret/v1.1.0
+kvault/v1.0.0
+kvault/v1.1.0
 ```
 
 A single repo-wide tag such as `v1` would release every action at once, so a change to one action would look like a new version of all of them. Per-action tags keep each action's history separate.
@@ -50,7 +50,7 @@ Version numbers follow [Semantic Versioning](https://semver.org/): a major bump 
 For workflows that handle secrets, pin to a full commit SHA rather than a tag, because a tag can be moved:
 
 ```yaml
-- uses: get-everything-cloud/github-actions/kvault-fetch-secret@<commit-sha> # kvault-fetch-secret/v1.0.0
+- uses: get-everything-cloud/github-actions/kvault@<commit-sha> # kvault/v1.0.0
 ```
 
 Dependabot and Renovate can keep SHA pins up to date.
@@ -63,7 +63,7 @@ Dependabot and Renovate can keep SHA pins up to date.
 
 ## KVault
 
-KVault is a self-hosted secrets manager. `kvault-fetch-secret` works with any KVault instance that has GitHub Actions OIDC enabled and a trust policy for your repository. See the [action's README](kvault-fetch-secret/) for what the instance needs.
+KVault is a self-hosted secrets manager. The `kvault` action works with any KVault instance that has GitHub Actions OIDC enabled and a trust policy for your repository. See the [action's README](kvault/) for what the instance needs.
 
 ## Development
 

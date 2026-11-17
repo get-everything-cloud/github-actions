@@ -55,7 +55,7 @@ after(() => server.close());
 
 function setup(secretsInput, extra = {}) {
   requests = [];
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "kvault-fetch-secret-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "kvault-"));
   const envFile = path.join(dir, "env");
   fs.writeFileSync(envFile, "");
   const lines = [];

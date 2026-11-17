@@ -1,4 +1,4 @@
-name: KVault fetch secret
+name: KVault
 description: Fetch secrets from a KVault instance with the workflow's GitHub OIDC token, mask them and export them as environment variables.
 author: get-everything-cloud
 

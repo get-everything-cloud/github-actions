@@ -1,4 +1,4 @@
-# kvault-fetch-secret
+# kvault
 
 Fetches secrets from a KVault instance using the job's GitHub OIDC token, masks each value in the log, and exports it as an environment variable for later steps in the job.
 
@@ -15,7 +15,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: get-everything-cloud/github-actions/kvault-fetch-secret@kvault-fetch-secret/v1.0.0
+      - uses: get-everything-cloud/github-actions/kvault@kvault/v1.0.0
         with:
           url: https://vault.example.com
           audience: kvault-example

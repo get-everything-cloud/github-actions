@@ -1,6 +1,6 @@
 "use strict";
 
-// KVault fetch secret: requests the job's GitHub OIDC token, calls KVault's
+// KVault action: requests the job's GitHub OIDC token, calls KVault's
 // GET /api/gh-oidc/secrets/<name> for each mapped secret, masks every value
 // and writes it to $GITHUB_ENV. No dependencies: the runner protocol (inputs,
 // workflow commands, GITHUB_ENV) is implemented directly.
