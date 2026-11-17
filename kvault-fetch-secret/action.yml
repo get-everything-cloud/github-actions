@@ -1,0 +1,20 @@
+name: KVault fetch secret
+description: Fetch secrets from a KVault instance with the workflow's GitHub OIDC token, mask them and export them as environment variables.
+author: get-everything-cloud
+
+inputs:
+  url:
+    description: Base URL of the KVault instance, for example https://vault.example.com
+    required: true
+  audience:
+    description: OIDC audience to request. Must equal the instance's GH_OIDC_AUD setting.
+    required: true
+  secrets:
+    description: |
+      One mapping per line, in the form `<secret-name>=<ENV_VAR>`.
+      Blank lines and lines starting with `#` are ignored.
+    required: true
+
+runs:
+  using: node24
+  main: index.js
