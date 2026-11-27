@@ -2,7 +2,7 @@
 
 Fetches secrets from a KVault instance using the job's GitHub OIDC token, masks each value in the log, and exports it as an environment variable for later steps in the job.
 
-The action calls KVault's `GET /api/gh-oidc/secrets/<name>`. It holds no credentials of its own: access is decided by the KVault instance's trust policies.
+The action calls KVault's `GET /api/oidc/secrets/<name>`, its route for CI OIDC tokens (KVault v0.14.0 or later; `kvault/v1.0.0` used the older `/api/gh-oidc/` path, which KVault still serves). It holds no credentials of its own: access is decided by the KVault instance's trust policies.
 
 ## Usage
 
@@ -48,7 +48,7 @@ The action has no outputs. Values are passed only through `$GITHUB_ENV`.
 - `GH_OIDC_AUD` must be set on the instance. Without it the route returns 503.
 - A trust policy must match the job's token: the repository's numeric id (`gh api repos/<owner>/<repo> --jq .id`) plus the `ref` and/or `environment` the policy names. Its `allowedSecretNames` must list each secret.
 - Secrets with an IP restriction are always refused on this route. Fetch those with a Service Token or machine key.
-- If Cloudflare Access protects the instance, `/api/gh-oidc/*` needs an Access Bypass policy. A runner has no Access identity, so Access would otherwise redirect or block the request before it reaches KVault.
+- If Cloudflare Access protects the instance, `/api/oidc/*` needs an Access Bypass policy. A runner has no Access identity, so Access would otherwise redirect or block the request before it reaches KVault.
 
 ## Errors
 
@@ -59,7 +59,7 @@ The action has no outputs. Values are passed only through `$GITHUB_ENV`.
 | 403 | The token's repository id, ref and environment, the trust policy's `allowedSecretNames`, or an IP restriction. |
 | 404 | No secret with that name. |
 | 503 | GitHub OIDC disabled on the instance (`GH_OIDC_AUD` unset). |
-| Redirect or non-JSON | Cloudflare Access in front of `/api/gh-oidc/*`. |
+| Redirect or non-JSON | Cloudflare Access in front of `/api/oidc/*`. |
 
 ## Runtime
 

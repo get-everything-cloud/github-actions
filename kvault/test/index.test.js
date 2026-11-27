@@ -1,7 +1,7 @@
 "use strict";
 
 // Runs the action against a local mock of GitHub's OIDC token endpoint and
-// KVault's /api/gh-oidc/secrets route. No network access beyond 127.0.0.1.
+// KVault's /api/oidc/secrets route. No network access beyond 127.0.0.1.
 
 const { test, before, after } = require("node:test");
 const assert = require("node:assert/strict");
@@ -38,7 +38,7 @@ before(async () => {
       res.writeHead(200, { "Content-Type": "application/json" });
       return res.end(JSON.stringify({ value: TOKEN, audience: u.searchParams.get("audience") }));
     }
-    const m = u.pathname.match(/^\/api\/gh-oidc\/secrets\/(.+)$/);
+    const m = u.pathname.match(/^\/api\/oidc\/secrets\/(.+)$/);
     const s = m && secrets[decodeURIComponent(m[1])];
     if (!s || req.headers.authorization !== `Bearer ${TOKEN}`) {
       res.writeHead(404, { "Content-Type": "application/json" });

@@ -1,7 +1,7 @@
 "use strict";
 
 // KVault action: requests the job's GitHub OIDC token, calls KVault's
-// GET /api/gh-oidc/secrets/<name> for each mapped secret, masks every value
+// GET /api/oidc/secrets/<name> for each mapped secret, masks every value
 // and writes it to $GITHUB_ENV. No dependencies: the runner protocol (inputs,
 // workflow commands, GITHUB_ENV) is implemented directly.
 
@@ -118,7 +118,7 @@ function detail(body) {
 }
 
 async function fetchSecret(baseUrl, token, name) {
-  const url = `${baseUrl}/api/gh-oidc/secrets/${encodeURIComponent(name)}`;
+  const url = `${baseUrl}/api/oidc/secrets/${encodeURIComponent(name)}`;
   // redirect: "manual" so a Cloudflare Access login redirect is reported
   // instead of followed to an HTML page.
   const res = await fetch(url, {
@@ -126,7 +126,7 @@ async function fetchSecret(baseUrl, token, name) {
     headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
   });
   const accessHint =
-    "This usually means Cloudflare Access is in front of /api/gh-oidc/* without a Bypass policy for that path.";
+    "This usually means Cloudflare Access is in front of /api/oidc/* without a Bypass policy for that path.";
   if (res.status >= 300 && res.status < 400) {
     throw new Error(`KVault redirected the request for "${name}" (HTTP ${res.status}). ${accessHint}`);
   }
