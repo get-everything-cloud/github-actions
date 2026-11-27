@@ -2,7 +2,7 @@
 
 Fetches secrets from a KVault instance using the job's GitHub OIDC token, masks each value in the log, and exports it as an environment variable for later steps in the job.
 
-The action calls KVault's `GET /api/oidc/secrets/<name>`, its route for CI OIDC tokens (KVault v0.14.0 or later; `kvault/v1.0.0` used the older `/api/gh-oidc/` path, which KVault still serves). It holds no credentials of its own: access is decided by the KVault instance's trust policies.
+The action calls KVault's `GET /api/oidc/secrets/<name>`, its route for CI OIDC tokens (KVault v0.14.0 or later). `kvault/v1.0.0` used the older `/api/gh-oidc/` path, which KVault retired in v0.15.0, so it no longer works. It holds no credentials of its own: access is decided by the KVault instance's trust policies.
 
 ## Usage
 
